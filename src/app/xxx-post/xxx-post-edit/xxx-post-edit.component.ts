@@ -19,7 +19,8 @@ import {XxxPostFacadeService} from "../xxx-post-facade.service";
   templateUrl: './xxx-post-edit.component.html',
 })
 export class XxxPostEditComponent {
-  private contentFacade: XxxContentFacade = inject(XxxContentFacade)
+  private contentFacade: XxxContentFacade = inject(XxxContentFacade);
+  private postFacade: XxxPostFacadeService = inject(XxxPostFacadeService);
   contentKey: string = 'post-edit';
   $content: Signal<XxxContent | undefined> = this.contentFacade.$content;
   $isNoSelectedPost: Signal<boolean> = this.postFacade.$isNoSelectedPost;
@@ -33,7 +34,6 @@ export class XxxPostEditComponent {
   $selectedPost: Signal<XxxPost | undefined> = this.postFacade.$selectedPost;
 
   constructor(
-    private postFacade: XxxPostFacadeService
   ) {
     this.contentFacade.showContent(this.contentKey)
     this.loadFormData();
