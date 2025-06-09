@@ -33,8 +33,7 @@ export class XxxPostEditComponent {
   });
   $selectedPost: Signal<XxxPost | undefined> = this.postFacade.$selectedPost;
 
-  constructor(
-  ) {
+  constructor() {
     this.contentFacade.showContent(this.contentKey)
     this.loadFormData();
     this.subscribeToFormChanges();
