@@ -14,7 +14,6 @@ export class XxxContentComponent implements OnInit {
   $contentErrorMessage: Signal<string | undefined> = this.contentFacade.$contentErrorMessage;
   $isContentEmpty: Signal<boolean> = this.contentFacade.$isContentEmpty;
   $isContentError: Signal<boolean> = this.contentFacade.$isContentError;
-  $isContentLoaded: Signal<boolean> = this.contentFacade.$isContentLoaded;
   $isContentLoading: Signal<boolean> = this.contentFacade.$isContentLoading;
 
   ngOnInit(): void {
