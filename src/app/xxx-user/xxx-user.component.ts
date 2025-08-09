@@ -30,7 +30,7 @@ export class XxxUserComponent {
     this.userFacade.showUsers();
   }
 
-  rowClick(user: XxxUser): void {
+  protected rowClick(user: XxxUser): void {
     this.userFacade.selectUser(user.id);
   }
 }

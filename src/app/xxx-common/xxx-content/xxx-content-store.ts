@@ -32,20 +32,21 @@ export class XxxContentStore {
   // If not, then we can call the effect or reducer directly.
   // Action methods always run first the reducer and then the effect.
 
-  private getContentAction(key: string) {
+  // Action methods run the reducer and effect
+  private getContentAction(key: string): void {
     this.getContentReducer(key);
     this.getContentEffect(key);
   }
 
-  private getContentErrorAction(key: string, err: HttpErrorResponse) {
+  private getContentErrorAction(key: string, err: HttpErrorResponse): void {
     this.getContentErrorReducer(key, err);
   }
 
-  private getContentSuccessAction(response: XxxContentApi) {
+  private getContentSuccessAction(response: XxxContentApi): void {
     this.getContentSuccessReducer(response);
   }
 
-  showContentAction(key: string) {
+  showContentAction(key: string): void {
     this.showContentReducer(key);
     this.showContentEffect(key);
   }
@@ -59,15 +60,15 @@ export class XxxContentStore {
   // The workaround is to store the parameter in the state, then access it with a selector.
   // The flaw is the selected key could be overwritten if there are nearly simultaneous transactions of different keys!
 
-  private $contents_: Signal<XxxContent[]> = computed(() =>
+  private readonly $contents_: Signal<XxxContent[]> = computed(() =>
     this.$contentState().contents
   );
 
-  private $selectedKey_: Signal<string | undefined> = computed(() =>
+  private readonly $selectedKey_: Signal<string | undefined> = computed(() =>
     this.$contentState().selectedKey
   )
 
-  $content_: Signal<XxxContent | undefined> = computed(() => {
+  readonly $content_: Signal<XxxContent | undefined> = computed(() => {
     const selectedKey: string | undefined = this.$selectedKey_();
     const contents: XxxContent[] = this.$contents_();
     let content: XxxContent | undefined;
@@ -77,7 +78,7 @@ export class XxxContentStore {
     return content;
   })
 
-  $errorMessage_: Signal<string | undefined> = computed(() => {
+  readonly $errorMessage_: Signal<string | undefined> = computed(() => {
     const content: XxxContent | undefined = this.$content_();
     if (content) {
       return content?.errorMessage;
@@ -85,7 +86,7 @@ export class XxxContentStore {
     return undefined;
   })
 
-  $isContentEmpty_: Signal<boolean> = computed(() => {
+  readonly $isContentEmpty_: Signal<boolean> = computed(() => {
     const content: XxxContent | undefined = this.$content_();
     if (content) {
       return content?.status !== XxxContentStatus.ERROR && content?.status === XxxContentStatus.EMPTY;
@@ -93,7 +94,7 @@ export class XxxContentStore {
     return false;
   })
 
-  $isContentError_: Signal<boolean> = computed(() => {
+  readonly $isContentError_: Signal<boolean> = computed(() => {
     const content: XxxContent | undefined = this.$content_();
     if (content) {
       return content?.status === XxxContentStatus.ERROR;
@@ -101,7 +102,7 @@ export class XxxContentStore {
     return false;
   })
 
-  $isContentLoaded_: Signal<boolean> = computed(() => {
+  private readonly $isContentLoaded_: Signal<boolean> = computed(() => {
     const content: XxxContent | undefined = this.$content_();
     if (content) {
       return content?.status === XxxContentStatus.LOADED;
@@ -109,7 +110,7 @@ export class XxxContentStore {
     return false;
   })
 
-  $isContentLoading_: Signal<boolean> = computed(() => {
+  readonly $isContentLoading_: Signal<boolean> = computed(() => {
     const content: XxxContent | undefined = this.$content_();
     if (content) {
       return content?.status === XxxContentStatus.LOADING;
@@ -122,11 +123,11 @@ export class XxxContentStore {
   // The only place where we change or update the state values
   // When an action fires, we run the reducer before the effect
 
-  private showContentReducer(selectedKey: string) {
+  private showContentReducer(selectedKey: string): void {
     this.$contentState.update(state => ({...state, selectedKey}));
   }
 
-  private getContentReducer(key: string) {
+  private getContentReducer(key: string): void {
     // Remove any existing content, also replaces the old array for immutability
     const contents: XxxContent[] = this.$contents_().filter(item => item.key !== key);
     // Create a new content object
@@ -146,7 +147,7 @@ export class XxxContentStore {
     );
   }
 
-  private getContentErrorReducer(key: string, err: HttpErrorResponse) {
+  private getContentErrorReducer(key: string, err: HttpErrorResponse): void {
     // Set the error message
     const errorMessage: string = `Key '${key}'. ${XxxHttpUtilities.setErrorMessage(err)}`;
     // Remove any existing content, also replaces the old array for immutability
@@ -168,7 +169,7 @@ export class XxxContentStore {
     );
   }
 
-  private getContentSuccessReducer(contentApi: XxxContentApi) {
+  private getContentSuccessReducer(contentApi: XxxContentApi): void {
     // Create a new content object
     const content: XxxContent = {
       contentModel: contentApi.contentModel,
@@ -192,7 +193,7 @@ export class XxxContentStore {
   // For data access, navigation, or to open a dialog
   // They are often used to run a service
 
-  getContentEffect(key: string) {
+  private getContentEffect(key: string): void {
     let isError = false;
     this.contentService.getContent(key)
       .pipe(
@@ -213,7 +214,7 @@ export class XxxContentStore {
       });
   }
 
-  showContentEffect(key: string) {
+  private showContentEffect(key: string): void {
     // Check to see if content already exists
     // If content is not loaded, then load it
     if (!this.$isContentLoaded_()) {

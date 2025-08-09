@@ -17,16 +17,16 @@ export class XxxPostFacadeService {
   readonly $selectedPost: Signal<XxxPost | undefined> = this.postStore.$selectedPost_;
   readonly $selectedPostId: Signal<number | undefined> = this.postStore.$selectedPostId_;
 
-  showPosts(): void {
-    this.postStore.showPostsAction();
-  }
-
   selectPost(postId: number): void {
     this.postStore.selectPostAction(postId);
   }
 
   setPostForm(post: XxxPost): void {
     this.postStore.setPostFormAction(post)
+  }
+
+  showPosts(): void {
+    this.postStore.showPostsAction();
   }
 
   updatePost(): void {

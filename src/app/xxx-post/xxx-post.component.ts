@@ -15,7 +15,7 @@ import { XxxPostFacadeService } from "./xxx-post-facade.service";
   templateUrl: './xxx-post.component.html',
 })
 export class XxxPostComponent {
-  contentKey: string = 'post';
+  protected readonly contentKey: string = 'post';
   private contentFacade: XxxContentFacade = inject(XxxContentFacade);
   protected readonly $content: Signal<XxxContent | undefined> = this.contentFacade.$content;
   private postFacade: XxxPostFacadeService = inject(XxxPostFacadeService);

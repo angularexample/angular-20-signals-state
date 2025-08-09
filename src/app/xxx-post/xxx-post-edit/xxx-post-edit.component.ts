@@ -20,7 +20,7 @@ import { XxxPostFacadeService } from "../xxx-post-facade.service";
 })
 export class XxxPostEditComponent {
   protected readonly contentKey: string = 'post-edit';
-  postForm: FormGroup = new FormGroup({
+  protected postForm: FormGroup = new FormGroup({
     body: new FormControl(xxxPostFormDataInitial.body, Validators.required),
     id: new FormControl(xxxPostFormDataInitial.id),
     title: new FormControl(xxxPostFormDataInitial.title, Validators.required),
