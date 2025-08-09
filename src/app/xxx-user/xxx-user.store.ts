@@ -27,51 +27,45 @@ export class XxxUserStore {
   private $userState: WritableSignal<XxxUserState> = signal<XxxUserState>(xxxUserInitialState);
 
   // Actions
-
-  selectUserAction(userId: number) {
+  selectUserAction(userId: number): void {
     this.selectUserReducer(userId);
     this.selectUserEffect();
   }
 
-  showUsersAction() {
+  showUsersAction(): void {
     this.showUsersEffect();
   }
 
-  private getUsersAction() {
+  private getUsersAction(): void {
     this.getUsersReducer();
     this.getUsersEffect();
   }
 
-  private getUsersErrorAction(err: HttpErrorResponse) {
+  private getUsersErrorAction(err: HttpErrorResponse): void {
     this.getUsersErrorReducer();
     this.getUsersErrorEffect(err);
   }
 
-  private getUsersSuccessAction(users: XxxUser[]) {
+  private getUsersSuccessAction(users: XxxUser[]): void {
     this.getUsersSuccessReducer(users);
     this.getUsersSuccessEffect();
   }
 
-
   // Selectors
+  readonly $isNoSelectedUser_: Signal<boolean> = computed(() => this.$selectedUserId_() === undefined);
 
-  $isNoSelectedUser_: Signal<boolean> = computed(() => this.$selectedUserId_() === undefined);
+  readonly $isUsersEmpty_: Signal<boolean> = computed(() => !this.$userState().isUsersLoading && this.$userState().users.length === 0);
 
-  $isUsersEmpty_: Signal<boolean> = computed(() => !this.$userState().isUsersLoading && this.$userState().users.length === 0);
+  readonly $isUsersLoaded_: Signal<boolean> = computed(() => this.$userState().users.length > 0);
 
-  $isUsersLoaded_: Signal<boolean> = computed(() => this.$userState().users.length > 0);
+  readonly $isUsersLoading_: Signal<boolean> = computed(() => this.$userState().isUsersLoading);
 
-  $isUsersLoading_: Signal<boolean> = computed(() => this.$userState().isUsersLoading);
+  readonly $selectedUserId_: Signal<number | undefined> = computed(() => this.$userState().selectedUserId);
 
-  $selectedUserId_: Signal<number | undefined> = computed(() => this.$userState().selectedUserId);
-
-  $users_: Signal<XxxUser[]> = computed(() => this.$userState().users);
-
-
+  readonly $users_: Signal<XxxUser[]> = computed(() => this.$userState().users);
 
   // Reducers
-
-  private getUsersReducer() {
+  private getUsersReducer(): void {
     this.$userState.update(state =>
       ({
         ...state,
@@ -81,7 +75,7 @@ export class XxxUserStore {
     )
   }
 
-  private getUsersErrorReducer() {
+  private getUsersErrorReducer(): void {
     this.$userState.update(state =>
       ({
         ...state,
@@ -90,7 +84,7 @@ export class XxxUserStore {
     )
   }
 
-  private getUsersSuccessReducer(users: XxxUser[]) {
+  private getUsersSuccessReducer(users: XxxUser[]): void {
     this.$userState.update(state =>
       ({
         ...state,
@@ -100,7 +94,7 @@ export class XxxUserStore {
     )
   }
 
-  private selectUserReducer(userId: number) {
+  private selectUserReducer(userId: number): void {
     this.$userState.update(state =>
       ({
         ...state,
@@ -109,10 +103,8 @@ export class XxxUserStore {
     )
   }
 
-
   // Effects
-
-  private getUsersEffect() {
+  private getUsersEffect(): void {
     this.loadingService.loadingOn();
     this.userDataService.getUsers().pipe(
       catchError((err: HttpErrorResponse) => {
@@ -125,27 +117,27 @@ export class XxxUserStore {
         };
         return of(emptyResponse);
       })
-    ).subscribe((response: unknown) => {
+    ).subscribe((response: unknown): void => {
       const apiResponse: XxxUserApiResponse = response as XxxUserApiResponse;
       this.getUsersSuccessAction(apiResponse.users);
     })
   }
 
-  private getUsersErrorEffect(err: HttpErrorResponse) {
+  private getUsersErrorEffect(err: HttpErrorResponse): void {
     this.loadingService.loadingOff();
     const errorMessage: string = XxxHttpUtilities.setErrorMessage(err);
     this.alertService.showError(errorMessage);
   }
 
-  private getUsersSuccessEffect() {
+  private getUsersSuccessEffect(): void {
     this.loadingService.loadingOff();
   }
 
-  private selectUserEffect() {
+  private selectUserEffect(): void {
     void this.router.navigateByUrl('/post')
   }
 
-  private showUsersEffect() {
+  private showUsersEffect(): void {
     if (!this.$isUsersLoaded_()) {
       this.getUsersAction();
     }
