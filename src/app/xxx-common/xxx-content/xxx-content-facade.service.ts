@@ -14,7 +14,6 @@ export class XxxContentFacade {
   $contentErrorMessage: Signal<string | undefined> = this.contentStore.$errorMessage_;
   $isContentEmpty: Signal<boolean> = this.contentStore.$isContentEmpty_;
   $isContentError: Signal<boolean> = this.contentStore.$isContentError_;
-  $isContentLoaded: Signal<boolean> = this.contentStore.$isContentLoaded_;
   $isContentLoading: Signal<boolean> = this.contentStore.$isContentLoading_;
 
   /**
