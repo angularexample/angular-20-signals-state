@@ -1,12 +1,12 @@
-import {catchError, of} from "rxjs";
-import {computed, inject, Injectable, Signal, signal, WritableSignal} from "@angular/core";
-import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {XxxAlertService} from "../xxx-common/xxx-alert/xxx-alert.service";
-import {XxxHttpUtilities} from "../xxx-common/xxx-utilities/xxx-http-utilities";
-import {XxxLoadingService} from "../xxx-common/xxx-loading/xxx-loading.service";
-import {XxxUser, XxxUserApiResponse, xxxUserInitialState, XxxUserState} from "./xxx-user.types";
-import {XxxUserDataService} from "./xxx-user-data.service"
+import { catchError, of } from "rxjs";
+import { computed, inject, Injectable, Signal, signal, WritableSignal } from "@angular/core";
+import { HttpErrorResponse } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { XxxAlertService } from "../xxx-common/xxx-alert/xxx-alert.service";
+import { XxxHttpUtilities } from "../xxx-common/xxx-utilities/xxx-http-utilities";
+import { XxxLoadingService } from "../xxx-common/xxx-loading/xxx-loading.service";
+import { XxxUser, XxxUserApiResponse, xxxUserInitialState, XxxUserState } from "./xxx-user.types";
+import { XxxUserDataService } from "./xxx-user-data.service"
 
 /**
  * XxxUserStore is the feature state for the user page.
@@ -17,14 +17,30 @@ import {XxxUserDataService} from "./xxx-user-data.service"
   providedIn: 'root'
 })
 export class XxxUserStore {
+  $isNoSelectedUser_: Signal<boolean> = computed(() => this.$selectedUserId_() === undefined);
   private router: Router = inject(Router);
   private alertService: XxxAlertService = inject(XxxAlertService);
   private loadingService: XxxLoadingService = inject(XxxLoadingService);
-  private userDataService: XxxUserDataService = inject(XxxUserDataService);
 
   // State
+  private userDataService: XxxUserDataService = inject(XxxUserDataService);
   // Where we store all the properties needed to support the view
   private $userState: WritableSignal<XxxUserState> = signal<XxxUserState>(xxxUserInitialState);
+// Selectors
+  $isUsersEmpty_: Signal<boolean> = computed(() => !this.$userState().isUsersLoading && this.$userState().users.length === 0);
+  $isUsersLoaded_: Signal<boolean> = computed(() => this.$userState().users.length > 0);
+  $isUsersLoading_: Signal<boolean> = computed(() => this.$userState().isUsersLoading);
+  $selectedUserId_: Signal<number | undefined> = computed(() => this.$userState().selectedUserId);
+  $users_: Signal<XxxUser[]> = computed(() => this.$userState().users);
+
+  selectUserAction(userId: number) {
+    this.selectUserReducer(userId);
+    this.selectUserEffect(userId);
+  }
+
+  showUsersAction() {
+    this.showUsersEffect();
+  }
 
 // Actions
   private getUsersAction() {
@@ -41,28 +57,6 @@ export class XxxUserStore {
     this.getUsersSuccessReducer(users);
     this.getUsersSuccessEffect(users);
   }
-
-  selectUserAction(userId: number) {
-    this.selectUserReducer(userId);
-    this.selectUserEffect(userId);
-  }
-
-  showUsersAction() {
-    this.showUsersEffect();
-  }
-
-// Selectors
-  $isUsersEmpty_: Signal<boolean> = computed(() => !this.$userState().isUsersLoading && this.$userState().users.length === 0);
-
-  $isUsersLoaded_: Signal<boolean> = computed(() => this.$userState().users.length > 0);
-
-  $isUsersLoading_: Signal<boolean> = computed(() => this.$userState().isUsersLoading);
-
-  $selectedUserId_: Signal<number | undefined> = computed(() => this.$userState().selectedUserId);
-
-  $isNoSelectedUser_: Signal<boolean> = computed(() => this.$selectedUserId_() === undefined);
-
-  $users_: Signal<XxxUser[]> = computed(() => this.$userState().users);
 
   // Reducers
   private getUsersReducer() {
