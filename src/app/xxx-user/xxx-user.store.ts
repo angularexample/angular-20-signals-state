@@ -35,7 +35,7 @@ export class XxxUserStore {
 
   selectUserAction(userId: number) {
     this.selectUserReducer(userId);
-    this.selectUserEffect(userId);
+    this.selectUserEffect();
   }
 
   showUsersAction() {
@@ -55,7 +55,7 @@ export class XxxUserStore {
 
   private getUsersSuccessAction(users: XxxUser[]) {
     this.getUsersSuccessReducer(users);
-    this.getUsersSuccessEffect(users);
+    this.getUsersSuccessEffect();
   }
 
   // Reducers
@@ -123,12 +123,12 @@ export class XxxUserStore {
     this.alertService.showError(errorMessage);
   }
 
-  private getUsersSuccessEffect(users: XxxUser[]) {
+  private getUsersSuccessEffect() {
     this.loadingService.loadingOff();
   }
 
-  private selectUserEffect(userId: number) {
-    this.router.navigateByUrl('/post')
+  private selectUserEffect() {
+    void this.router.navigateByUrl('/post')
   }
 
   private showUsersEffect() {

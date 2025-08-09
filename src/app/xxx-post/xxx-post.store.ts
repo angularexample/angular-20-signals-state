@@ -209,7 +209,7 @@ export class XxxPostStore {
   }
 
   private selectPostEffect() {
-    this.router.navigateByUrl('/post/edit')
+    void this.router.navigateByUrl('/post/edit')
   }
 
   private showPostsEffect() {
@@ -252,6 +252,6 @@ export class XxxPostStore {
   private updatePostSuccessEffect() {
     this.loadingService.loadingOff();
     this.alertService.showInfo('Successfully updated post');
-    this.router.navigateByUrl('/post')
+    void this.router.navigateByUrl('/post')
   }
 }
