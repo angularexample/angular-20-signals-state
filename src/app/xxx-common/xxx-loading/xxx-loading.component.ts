@@ -37,7 +37,7 @@ add the attribute to the loading element as in this example
 export class XxxLoadingComponent implements OnInit {
   @ContentChild("loading") customLoadingIndicator: TemplateRef<any> | null = null;
   @Input() detectRouteTransitions = false;
-  loading$: Observable<boolean>;
+  protected loading$: Observable<boolean>;
   private loadingService: XxxLoadingService = inject(XxxLoadingService);
   private router: Router = inject(Router);
 

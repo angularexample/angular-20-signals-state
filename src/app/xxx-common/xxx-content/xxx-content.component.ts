@@ -11,10 +11,10 @@ import { XxxContentFacade } from "./xxx-content-facade.service";
 export class XxxContentComponent implements OnInit {
   @Input({required: true}) contentKey!: string;
   private contentFacade: XxxContentFacade = inject(XxxContentFacade);
-  $contentErrorMessage: Signal<string | undefined> = this.contentFacade.$contentErrorMessage;
-  $isContentEmpty: Signal<boolean> = this.contentFacade.$isContentEmpty;
-  $isContentError: Signal<boolean> = this.contentFacade.$isContentError;
-  $isContentLoading: Signal<boolean> = this.contentFacade.$isContentLoading;
+  protected readonly $contentErrorMessage: Signal<string | undefined> = this.contentFacade.$contentErrorMessage;
+  protected readonly $isContentEmpty: Signal<boolean> = this.contentFacade.$isContentEmpty;
+  protected readonly $isContentError: Signal<boolean> = this.contentFacade.$isContentError;
+  protected readonly $isContentLoading: Signal<boolean> = this.contentFacade.$isContentLoading;
 
   ngOnInit(): void {
     this.contentFacade.showContent(this.contentKey);
