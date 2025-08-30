@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { XxxUserApiResponse } from "./xxx-user.types";
+import { XxxUserApiResponse } from "./xxx-user-types";
 
 @Injectable({
   providedIn: 'root'
 })
-export class XxxUserDataService {
+export class XxxUserData {
   private http: HttpClient = inject(HttpClient);
 
   getUsers(): Observable<XxxUserApiResponse> {

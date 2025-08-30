@@ -2,11 +2,11 @@ import { catchError, of } from "rxjs";
 import { computed, inject, Injectable, Signal, signal, WritableSignal } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { XxxAlertService } from "../xxx-common/xxx-alert/xxx-alert.service";
+import { XxxAlert } from "../xxx-common/xxx-alert/xxx-alert";
 import { XxxHttpUtilities } from "../xxx-common/xxx-utilities/xxx-http-utilities";
-import { XxxLoadingService } from "../xxx-common/xxx-loading/xxx-loading.service";
-import { XxxUser, XxxUserApiResponse, xxxUserInitialState, XxxUserState } from "./xxx-user.types";
-import { XxxUserDataService } from "./xxx-user-data.service"
+import { XxxLoadingService } from "../xxx-common/xxx-loading/xxx-loading-service";
+import { XxxUserType, XxxUserApiResponse, xxxUserInitialState, XxxUserState } from "./xxx-user-types";
+import { XxxUserData } from "./xxx-user-data"
 
 /**
  * XxxUserStore is the feature state for the user page.
@@ -17,10 +17,10 @@ import { XxxUserDataService } from "./xxx-user-data.service"
   providedIn: 'root'
 })
 export class XxxUserStore {
-  private alertService: XxxAlertService = inject(XxxAlertService);
+  private alertService: XxxAlert = inject(XxxAlert);
   private loadingService: XxxLoadingService = inject(XxxLoadingService);
   private router: Router = inject(Router);
-  private userDataService: XxxUserDataService = inject(XxxUserDataService);
+  private userDataService: XxxUserData = inject(XxxUserData);
 
   // State
   // Where we store all the properties needed to support the view
@@ -46,7 +46,7 @@ export class XxxUserStore {
     this.getUsersErrorEffect(err);
   }
 
-  private getUsersSuccessAction(users: XxxUser[]): void {
+  private getUsersSuccessAction(users: XxxUserType[]): void {
     this.getUsersSuccessReducer(users);
     this.getUsersSuccessEffect();
   }
@@ -62,7 +62,7 @@ export class XxxUserStore {
 
   readonly $selectedUserId_: Signal<number | undefined> = computed(() => this.$userState().selectedUserId);
 
-  readonly $users_: Signal<XxxUser[]> = computed(() => this.$userState().users);
+  readonly $users_: Signal<XxxUserType[]> = computed(() => this.$userState().users);
 
   // Reducers
   private getUsersReducer(): void {
@@ -84,7 +84,7 @@ export class XxxUserStore {
     )
   }
 
-  private getUsersSuccessReducer(users: XxxUser[]): void {
+  private getUsersSuccessReducer(users: XxxUserType[]): void {
     this.$userState.update(state =>
       ({
         ...state,

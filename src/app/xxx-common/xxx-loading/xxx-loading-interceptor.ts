@@ -1,4 +1,4 @@
-import { XxxLoadingService } from "./xxx-loading.service";
+import { XxxLoadingService } from "./xxx-loading-service";
 import { HttpContextToken, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { finalize, Observable } from "rxjs";
 import { inject, Injectable } from "@angular/core";

@@ -1,13 +1,13 @@
 import { computed, inject, Injectable, Signal, signal, WritableSignal } from "@angular/core";
 import {
-  XxxContent,
+  XxxContentType,
   XxxContentApi,
   xxxContentInitialState,
   XxxContentState,
   XxxContentStatus
-} from "./xxx-content.types";
+} from "./xxx-content-types";
 import { catchError, of } from "rxjs";
-import { XxxContentService } from "./xxx-content.service";
+import { XxxContentService } from "./xxx-content-service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { XxxHttpUtilities } from "../xxx-utilities/xxx-http-utilities";
 
@@ -60,7 +60,7 @@ export class XxxContentStore {
   // The workaround is to store the parameter in the state, then access it with a selector.
   // The flaw is the selected key could be overwritten if there are nearly simultaneous transactions of different keys!
 
-  private readonly $contents_: Signal<XxxContent[]> = computed(() =>
+  private readonly $contents_: Signal<XxxContentType[]> = computed(() =>
     this.$contentState().contents
   );
 
@@ -68,10 +68,10 @@ export class XxxContentStore {
     this.$contentState().selectedKey
   )
 
-  readonly $content_: Signal<XxxContent | undefined> = computed(() => {
+  readonly $content_: Signal<XxxContentType | undefined> = computed(() => {
     const selectedKey: string | undefined = this.$selectedKey_();
-    const contents: XxxContent[] = this.$contents_();
-    let content: XxxContent | undefined;
+    const contents: XxxContentType[] = this.$contents_();
+    let content: XxxContentType | undefined;
     if (selectedKey) {
       content = contents.find(item => item.key === selectedKey);
     }
@@ -79,7 +79,7 @@ export class XxxContentStore {
   })
 
   readonly $errorMessage_: Signal<string | undefined> = computed(() => {
-    const content: XxxContent | undefined = this.$content_();
+    const content: XxxContentType | undefined = this.$content_();
     if (content) {
       return content?.errorMessage;
     }
@@ -87,7 +87,7 @@ export class XxxContentStore {
   })
 
   readonly $isContentEmpty_: Signal<boolean> = computed(() => {
-    const content: XxxContent | undefined = this.$content_();
+    const content: XxxContentType | undefined = this.$content_();
     if (content) {
       return content?.status !== XxxContentStatus.ERROR && content?.status === XxxContentStatus.EMPTY;
     }
@@ -95,7 +95,7 @@ export class XxxContentStore {
   })
 
   readonly $isContentError_: Signal<boolean> = computed(() => {
-    const content: XxxContent | undefined = this.$content_();
+    const content: XxxContentType | undefined = this.$content_();
     if (content) {
       return content?.status === XxxContentStatus.ERROR;
     }
@@ -103,7 +103,7 @@ export class XxxContentStore {
   })
 
   private readonly $isContentLoaded_: Signal<boolean> = computed(() => {
-    const content: XxxContent | undefined = this.$content_();
+    const content: XxxContentType | undefined = this.$content_();
     if (content) {
       return content?.status === XxxContentStatus.LOADED;
     }
@@ -111,7 +111,7 @@ export class XxxContentStore {
   })
 
   readonly $isContentLoading_: Signal<boolean> = computed(() => {
-    const content: XxxContent | undefined = this.$content_();
+    const content: XxxContentType | undefined = this.$content_();
     if (content) {
       return content?.status === XxxContentStatus.LOADING;
     }
@@ -129,9 +129,9 @@ export class XxxContentStore {
 
   private getContentReducer(key: string): void {
     // Remove any existing content, also replaces the old array for immutability
-    const contents: XxxContent[] = this.$contents_().filter(item => item.key !== key);
+    const contents: XxxContentType[] = this.$contents_().filter(item => item.key !== key);
     // Create a new content object
-    const content: XxxContent = {
+    const content: XxxContentType = {
       contentModel: undefined,
       errorMessage: undefined,
       status: XxxContentStatus.LOADING,
@@ -151,9 +151,9 @@ export class XxxContentStore {
     // Set the error message
     const errorMessage: string = `Key '${key}'. ${XxxHttpUtilities.setErrorMessage(err)}`;
     // Remove any existing content, also replaces the old array for immutability
-    const contents: XxxContent[] = this.$contents_().filter(item => item.key !== key);
+    const contents: XxxContentType[] = this.$contents_().filter(item => item.key !== key);
     // Create a new content object
-    const content: XxxContent = {
+    const content: XxxContentType = {
       contentModel: undefined,
       errorMessage,
       status: XxxContentStatus.ERROR,
@@ -171,13 +171,13 @@ export class XxxContentStore {
 
   private getContentSuccessReducer(contentApi: XxxContentApi): void {
     // Create a new content object
-    const content: XxxContent = {
+    const content: XxxContentType = {
       contentModel: contentApi.contentModel,
       status: contentApi.contentModel.pageTitle && contentApi.contentModel.pageTitle ? XxxContentStatus.LOADED : XxxContentStatus.EMPTY,
       key: contentApi.key
     };
     // Remove any existing content, also replaces the old array for immutability
-    const contents: XxxContent[] = this.$contents_().filter(item => item.key !== content.key);
+    const contents: XxxContentType[] = this.$contents_().filter(item => item.key !== content.key);
     // Add the new content object
     contents.push(content);
     // Finally, update the state

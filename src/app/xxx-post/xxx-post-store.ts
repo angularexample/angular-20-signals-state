@@ -2,12 +2,12 @@ import { catchError, of } from "rxjs";
 import { computed, inject, Injectable, Signal, signal, WritableSignal } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { XxxAlertService } from "../xxx-common/xxx-alert/xxx-alert.service";
+import { XxxAlert } from "../xxx-common/xxx-alert/xxx-alert";
 import { XxxHttpUtilities } from "../xxx-common/xxx-utilities/xxx-http-utilities";
-import { XxxLoadingService } from "../xxx-common/xxx-loading/xxx-loading.service";
-import { XxxPost, xxxPostInitialState, XxxPostState } from "./xxx-post.types";
-import { XxxPostDataService } from "./xxx-post-data.service"
-import { XxxUserStore } from "../xxx-user/xxx-user.store";
+import { XxxLoadingService } from "../xxx-common/xxx-loading/xxx-loading-service";
+import { XxxPostType, xxxPostInitialState, XxxPostState } from "./xxx-post-types";
+import { XxxPostData } from "./xxx-post-data"
+import { XxxUserStore } from "../xxx-user/xxx-user-store";
 
 /**
  * XxxPostStore is the feature state for the post page.
@@ -18,9 +18,9 @@ import { XxxUserStore } from "../xxx-user/xxx-user.store";
   providedIn: 'root'
 })
 export class XxxPostStore {
-  private alertService: XxxAlertService = inject(XxxAlertService);
+  private alertService: XxxAlert = inject(XxxAlert);
   private loadingService: XxxLoadingService = inject(XxxLoadingService);
-  private postDataService: XxxPostDataService = inject(XxxPostDataService);
+  private postDataService: XxxPostData = inject(XxxPostData);
   private router: Router = inject(Router);
   private userStore: XxxUserStore = inject(XxxUserStore);
 
@@ -40,7 +40,7 @@ export class XxxPostStore {
     this.getPostsErrorEffect(err);
   }
 
-  private getPostsSuccessAction(posts: XxxPost[]): void {
+  private getPostsSuccessAction(posts: XxxPostType[]): void {
     this.getPostsSuccessReducer(posts);
     this.getPostsSuccessEffect();
   }
@@ -50,7 +50,7 @@ export class XxxPostStore {
     this.selectPostEffect();
   }
 
-  setPostFormAction(post: XxxPost): void {
+  setPostFormAction(post: XxxPostType): void {
     this.setPostFormReducer(post);
   }
 
@@ -89,13 +89,13 @@ export class XxxPostStore {
 
   readonly $selectedPostId_: Signal<number | undefined> = computed(() => this.$postState().selectedPostId);
 
-  private readonly $postForm_: Signal<XxxPost | undefined> = computed(() => this.$postState().postForm);
+  private readonly $postForm_: Signal<XxxPostType | undefined> = computed(() => this.$postState().postForm);
 
-  readonly $posts_: Signal<XxxPost[]> = computed(() => this.$postState().posts);
+  readonly $posts_: Signal<XxxPostType[]> = computed(() => this.$postState().posts);
 
-  readonly $selectedPost_: Signal<XxxPost | undefined> = computed(() => {
-    let post: XxxPost | undefined;
-    const posts: XxxPost[] = this.$posts_();
+  readonly $selectedPost_: Signal<XxxPostType | undefined> = computed(() => {
+    let post: XxxPostType | undefined;
+    const posts: XxxPostType[] = this.$posts_();
     const postId: number | undefined = this.$selectedPostId_();
     if (postId !== undefined && posts.length > 0) {
       post = posts.find(item => item.id === postId);
@@ -104,8 +104,8 @@ export class XxxPostStore {
   });
 
   readonly $isSaveButtonDisabled_: Signal<boolean> = computed(() => {
-    const postForm: XxxPost | undefined = this.$postForm_();
-    const selectedPost: XxxPost | undefined = this.$selectedPost_();
+    const postForm: XxxPostType | undefined = this.$postForm_();
+    const selectedPost: XxxPostType | undefined = this.$selectedPost_();
     const isPostFormEqual: boolean = JSON.stringify(selectedPost) === JSON.stringify(postForm);
     return this.$isPostUpdating_() || (!this.$isPostsLoaded_()) || (this.$selectedPost_() === undefined) || (postForm === undefined) || isPostFormEqual;
   });
@@ -130,7 +130,7 @@ export class XxxPostStore {
     )
   }
 
-  private getPostsSuccessReducer(posts: XxxPost[]): void {
+  private getPostsSuccessReducer(posts: XxxPostType[]): void {
     this.$postState.update(state =>
       ({
         ...state,
@@ -152,9 +152,9 @@ export class XxxPostStore {
     }
   }
 
-  private setPostFormReducer(post: XxxPost): void {
+  private setPostFormReducer(post: XxxPostType): void {
     // Create a new object for immutability
-    const postForm: XxxPost = <XxxPost>JSON.parse(JSON.stringify(post));
+    const postForm: XxxPostType = <XxxPostType>JSON.parse(JSON.stringify(post));
     this.$postState.update(state =>
       ({
         ...state,
@@ -203,7 +203,7 @@ export class XxxPostStore {
         return of([]);
       })
     ).subscribe((response: unknown) => {
-      const posts: XxxPost[] = response as XxxPost[];
+      const posts: XxxPostType[] = response as XxxPostType[];
       this.getPostsSuccessAction(posts);
     })
   }
@@ -230,7 +230,7 @@ export class XxxPostStore {
 
   private updatePostEffect(): void {
     this.loadingService.loadingOn();
-    const post: XxxPost | undefined = this.$postForm_();
+    const post: XxxPostType | undefined = this.$postForm_();
     if (post === undefined) {
       this.updatePostErrorAction(undefined);
       return;

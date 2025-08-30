@@ -3,7 +3,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { Observable, tap } from "rxjs";
 import { RouteConfigLoadEnd, RouteConfigLoadStart, Router } from "@angular/router";
-import { XxxLoadingService } from "./xxx-loading.service";
+import { XxxLoadingService } from "./xxx-loading-service";
 
 /*
 To turn off loading for certain http requests, set the context as in this example
@@ -31,10 +31,10 @@ add the attribute to the loading element as in this example
   ],
   selector: 'xxx-loading',
   standalone: true,
-  styleUrl: './xxx-loading.component.scss',
-  templateUrl: './xxx-loading.component.html',
+  styleUrl: './xxx-loading.scss',
+  templateUrl: './xxx-loading.html',
 })
-export class XxxLoadingComponent implements OnInit {
+export class XxxLoading implements OnInit {
   @ContentChild("loading") customLoadingIndicator: TemplateRef<any> | null = null;
   @Input() detectRouteTransitions = false;
   private loadingService: XxxLoadingService = inject(XxxLoadingService);

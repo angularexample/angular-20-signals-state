@@ -1,6 +1,6 @@
 import { Route } from "@angular/router";
-import { XxxPostComponent } from "./xxx-post.component";
-import { XxxPostEditComponent } from "./xxx-post-edit/xxx-post-edit.component";
+import { XxxPost } from "./xxx-post";
+import { XxxPostEdit } from "./xxx-post-edit/xxx-post-edit";
 
 export const xxxPostRoutes: Route[] = [
   {
@@ -9,11 +9,11 @@ export const xxxPostRoutes: Route[] = [
     children: [
       {
         path: '',
-        component: XxxPostComponent,
+        component: XxxPost,
       },
       {
         path: 'edit',
-        component: XxxPostEditComponent,
+        component: XxxPostEdit,
       },
     ],
   },

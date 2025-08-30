@@ -1,36 +1,36 @@
 import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
-import { XxxContent } from "../xxx-common/xxx-content/xxx-content.types";
-import { XxxContentComponent } from '../xxx-common/xxx-content/xxx-content.component';
-import { XxxContentFacade } from "../xxx-common/xxx-content/xxx-content-facade.service";
-import { XxxUser } from "./xxx-user.types";
-import { XxxUserFacade } from "./xxx-user-facade.service";
+import { XxxContentType } from "../xxx-common/xxx-content/xxx-content-types";
+import { XxxContent } from '../xxx-common/xxx-content/xxx-content';
+import { XxxContentFacade } from "../xxx-common/xxx-content/xxx-content-facade";
+import { XxxUserType } from "./xxx-user-types";
+import { XxxUserFacade } from "./xxx-user-facade";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    XxxContentComponent,
+    XxxContent,
   ],
   selector: 'xxx-user',
   standalone: true,
-  templateUrl: './xxx-user.component.html',
+  templateUrl: './xxx-user.html',
 })
-export class XxxUserComponent {
+export class XxxUser {
   protected readonly contentKey: string = 'user';
   private contentFacade: XxxContentFacade = inject(XxxContentFacade);
-  protected readonly $content: Signal<XxxContent | undefined> = this.contentFacade.$content;
+  protected readonly $content: Signal<XxxContentType | undefined> = this.contentFacade.$content;
   private userFacade: XxxUserFacade = inject(XxxUserFacade);
   protected readonly $isUsersEmpty: Signal<boolean> = this.userFacade.$isUsersEmpty;
   protected readonly $isUsersLoaded: Signal<boolean> = this.userFacade.$isUsersLoaded;
   protected readonly $isUsersLoading: Signal<boolean> = this.userFacade.$isUsersLoading;
   protected readonly $selectedUserId: Signal<number | undefined> = this.userFacade.$selectedUserId;
-  protected readonly $users: Signal<XxxUser[]> = this.userFacade.$users;
+  protected readonly $users: Signal<XxxUserType[]> = this.userFacade.$users;
 
   constructor() {
     this.contentFacade.showContent(this.contentKey)
     this.userFacade.showUsers();
   }
 
-  protected rowClick(user: XxxUser): void {
+  protected rowClick(user: XxxUserType): void {
     this.userFacade.selectUser(user.id);
   }
 }

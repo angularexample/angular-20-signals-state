@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit, Signal } from '@angular/core';
-import { XxxContentFacade } from "./xxx-content-facade.service";
+import { XxxContentFacade } from "./xxx-content-facade";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'xxx-content',
   standalone: true,
-  styleUrl: './xxx-content.component.scss',
-  templateUrl: './xxx-content.component.html',
+  styleUrl: './xxx-content.scss',
+  templateUrl: './xxx-content.html',
 })
-export class XxxContentComponent implements OnInit {
+export class XxxContent implements OnInit {
   @Input({required: true}) contentKey!: string;
   private contentFacade: XxxContentFacade = inject(XxxContentFacade);
   protected readonly $contentErrorMessage: Signal<string | undefined> = this.contentFacade.$contentErrorMessage;

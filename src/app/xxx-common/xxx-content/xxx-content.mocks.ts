@@ -1,6 +1,6 @@
-import { XxxContent, XxxContentStatus } from "./xxx-content.types";
+import { XxxContentType, XxxContentStatus } from "./xxx-content-types";
 
-export const mockContentHome: XxxContent = {
+export const mockContentHome: XxxContentType = {
   contentModel: {
     bodyText: 'Hello World, this is the body text for home',
     pageTitle: 'Home',

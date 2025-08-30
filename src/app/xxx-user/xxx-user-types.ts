@@ -1,4 +1,4 @@
-export interface XxxUser {
+export interface XxxUserType {
   firstName: string;
   id: number;
   lastName: string;
@@ -9,7 +9,7 @@ export interface XxxUserApiResponse {
   limit: number;
   skip: number;
   total: number;
-  users: XxxUser[];
+  users: XxxUserType[];
 }
 
 export const xxxUserInitialState: XxxUserState = {
@@ -21,5 +21,5 @@ export const xxxUserInitialState: XxxUserState = {
 export interface XxxUserState {
   isUsersLoading: boolean;
   selectedUserId: number | undefined;
-  users: XxxUser[];
+  users: XxxUserType[];
 }

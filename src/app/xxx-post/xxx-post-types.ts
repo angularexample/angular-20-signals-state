@@ -1,11 +1,11 @@
-export interface XxxPost {
+export interface XxxPostType {
   body: string;
   id: number;
   title: string;
   userId: number;
 }
 
-export const xxxPostFormDataInitial: XxxPost = {
+export const xxxPostFormDataInitial: XxxPostType = {
   body: '',
   id: 0,
   title: '',
@@ -21,7 +21,7 @@ export const xxxPostInitialState: XxxPostState = {
 export interface XxxPostState {
   isPostsLoading: boolean;
   isPostUpdating: boolean;
-  postForm?: XxxPost;
-  posts: XxxPost[];
+  postForm?: XxxPostType;
+  posts: XxxPostType[];
   selectedPostId?: number;
 }

@@ -1,29 +1,29 @@
 import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
-import { XxxContent } from "../xxx-common/xxx-content/xxx-content.types";
-import { XxxContentComponent } from '../xxx-common/xxx-content/xxx-content.component';
-import { XxxContentFacade } from "../xxx-common/xxx-content/xxx-content-facade.service";
-import { XxxPost } from "./xxx-post.types";
-import { XxxPostFacadeService } from "./xxx-post-facade.service";
+import { XxxContentType } from "../xxx-common/xxx-content/xxx-content-types";
+import { XxxContent } from '../xxx-common/xxx-content/xxx-content';
+import { XxxContentFacade } from "../xxx-common/xxx-content/xxx-content-facade";
+import { XxxPostType } from "./xxx-post-types";
+import { XxxPostFacade } from "./xxx-post-facade";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    XxxContentComponent,
+    XxxContent,
   ],
   selector: 'xxx-post',
   standalone: true,
-  templateUrl: './xxx-post.component.html',
+  templateUrl: './xxx-post.html',
 })
-export class XxxPostComponent {
+export class XxxPost {
   protected readonly contentKey: string = 'post';
   private contentFacade: XxxContentFacade = inject(XxxContentFacade);
-  protected readonly $content: Signal<XxxContent | undefined> = this.contentFacade.$content;
-  private postFacade: XxxPostFacadeService = inject(XxxPostFacadeService);
+  protected readonly $content: Signal<XxxContentType | undefined> = this.contentFacade.$content;
+  private postFacade: XxxPostFacade = inject(XxxPostFacade);
   protected readonly $isNoSelectedUser: Signal<boolean> = this.postFacade.$isNoSelectedUser;
   protected readonly $isPostsEmpty: Signal<boolean> = this.postFacade.$isPostsEmpty;
   protected readonly $isPostsLoaded: Signal<boolean> = this.postFacade.$isPostsLoaded;
   protected readonly $isPostsLoading: Signal<boolean> = this.postFacade.$isPostsLoading;
-  protected readonly $posts: Signal<XxxPost[]> = this.postFacade.$posts;
+  protected readonly $posts: Signal<XxxPostType[]> = this.postFacade.$posts;
   protected readonly $selectedPostId: Signal<number | undefined> = this.postFacade.$selectedPostId;
 
   constructor() {
@@ -31,7 +31,7 @@ export class XxxPostComponent {
     this.postFacade.showPosts();
   }
 
-  protected selectPost(post: XxxPost): void {
+  protected selectPost(post: XxxPostType): void {
     this.postFacade.selectPost(post.id);
   }
 }

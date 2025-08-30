@@ -1,5 +1,5 @@
 import { inject, Injectable, Signal } from '@angular/core';
-import { XxxContent } from "./xxx-content.types";
+import { XxxContentType } from "./xxx-content-types";
 import { XxxContentStore } from "./xxx-content-store";
 
 @Injectable({
@@ -8,7 +8,7 @@ import { XxxContentStore } from "./xxx-content-store";
 export class XxxContentFacade {
   // Store needs to be declared before it is used
   private contentStore: XxxContentStore = inject(XxxContentStore);
-  readonly $content: Signal<XxxContent | undefined> = this.contentStore.$content_;
+  readonly $content: Signal<XxxContentType | undefined> = this.contentStore.$content_;
   readonly $contentErrorMessage: Signal<string | undefined> = this.contentStore.$errorMessage_;
   readonly $isContentEmpty: Signal<boolean> = this.contentStore.$isContentEmpty_;
   readonly $isContentError: Signal<boolean> = this.contentStore.$isContentError_;

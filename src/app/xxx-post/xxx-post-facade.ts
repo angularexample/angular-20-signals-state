@@ -1,11 +1,11 @@
 import { inject, Injectable, Signal } from '@angular/core';
-import { XxxPost } from "./xxx-post.types";
-import { XxxPostStore } from './xxx-post.store';
+import { XxxPostType } from "./xxx-post-types";
+import { XxxPostStore } from './xxx-post-store';
 
 @Injectable({
   providedIn: 'root'
 })
-export class XxxPostFacadeService {
+export class XxxPostFacade {
   private postStore: XxxPostStore = inject(XxxPostStore);
   readonly $isNoSelectedPost: Signal<boolean> = this.postStore.$isNoSelectedPost_;
   readonly $isNoSelectedUser: Signal<boolean> = this.postStore.$isNoSelectedUser_;
@@ -13,15 +13,15 @@ export class XxxPostFacadeService {
   readonly $isPostsLoaded: Signal<boolean> = this.postStore.$isPostsLoaded_;
   readonly $isPostsLoading: Signal<boolean> = this.postStore.$isPostsLoading_;
   readonly $isSaveButtonDisabled: Signal<boolean> = this.postStore.$isSaveButtonDisabled_;
-  readonly $posts: Signal<XxxPost[]> = this.postStore.$posts_;
-  readonly $selectedPost: Signal<XxxPost | undefined> = this.postStore.$selectedPost_;
+  readonly $posts: Signal<XxxPostType[]> = this.postStore.$posts_;
+  readonly $selectedPost: Signal<XxxPostType | undefined> = this.postStore.$selectedPost_;
   readonly $selectedPostId: Signal<number | undefined> = this.postStore.$selectedPostId_;
 
   selectPost(postId: number): void {
     this.postStore.selectPostAction(postId);
   }
 
-  setPostForm(post: XxxPost): void {
+  setPostForm(post: XxxPostType): void {
     this.postStore.setPostFormAction(post)
   }
 

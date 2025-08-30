@@ -1,5 +1,5 @@
 import { Route } from "@angular/router";
-import { XxxUserComponent } from "./xxx-user.component";
+import { XxxUser } from "./xxx-user";
 
 export const xxxUserRoutes: Route[] = [
   {
@@ -8,7 +8,7 @@ export const xxxUserRoutes: Route[] = [
     children: [
       {
         path: '',
-        component: XxxUserComponent,
+        component: XxxUser,
       }
     ],
   },

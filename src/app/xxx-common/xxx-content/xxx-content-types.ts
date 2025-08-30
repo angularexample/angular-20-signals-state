@@ -1,4 +1,4 @@
-export interface XxxContent {
+export interface XxxContentType {
   contentModel?: XxxContentModel;
   errorMessage?: string;
   key: string;
@@ -20,7 +20,7 @@ export const xxxContentInitialState: XxxContentState = {
 };
 
 export interface XxxContentState {
-  contents: XxxContent[];
+  contents: XxxContentType[];
   selectedKey?: string;
 }
 
