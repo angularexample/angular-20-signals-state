@@ -11,7 +11,6 @@ import { XxxUserFacade } from "./xxx-user-facade";
     XxxContent,
   ],
   selector: 'xxx-user',
-  standalone: true,
   templateUrl: './xxx-user.html',
 })
 export class XxxUser {

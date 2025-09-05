@@ -11,7 +11,6 @@ import { XxxPostFacade } from "./xxx-post-facade";
     XxxContent,
   ],
   selector: 'xxx-post',
-  standalone: true,
   templateUrl: './xxx-post.html',
 })
 export class XxxPost {

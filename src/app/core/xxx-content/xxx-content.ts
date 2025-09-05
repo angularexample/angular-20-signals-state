@@ -4,7 +4,6 @@ import { XxxContentFacade } from "./xxx-content-facade";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'xxx-content',
-  standalone: true,
   styleUrl: './xxx-content.scss',
   templateUrl: './xxx-content.html',
 })

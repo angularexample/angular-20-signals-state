@@ -11,7 +11,6 @@ import { XxxSanitizePipe } from '../../core/xxx-sanitize/xxx-sanitize-pipe';
     XxxSanitizePipe,
   ],
   selector: 'xxx-home',
-  standalone: true,
   templateUrl: './xxx-home.html',
 })
 export class XxxHome {

@@ -1,5 +1,6 @@
 {
   "contentModel": {
+    "headerTitle": "Angular 20 Signals State Management Example",
     "pageTitle": "Users",
     "bodyText": "Select a user to view posts."
   },

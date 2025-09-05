@@ -30,7 +30,6 @@ add the attribute to the loading element as in this example
     NgTemplateOutlet,
   ],
   selector: 'xxx-loading',
-  standalone: true,
   styleUrl: './xxx-loading.scss',
   templateUrl: './xxx-loading.html',
 })

@@ -15,7 +15,6 @@ import { XxxPostFacade } from "../xxx-post-facade";
     XxxContent,
   ],
   selector: 'xxx-post-edit',
-  standalone: true,
   templateUrl: './xxx-post-edit.html',
 })
 export class XxxPostEdit {

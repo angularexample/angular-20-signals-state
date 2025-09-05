@@ -12,6 +12,7 @@ export interface XxxContentApi {
 
 export interface XxxContentModel {
   bodyText?: string;
+  headerTitle?: string;
   pageTitle?: string;
 }
 
