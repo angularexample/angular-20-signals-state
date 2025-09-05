@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
-import { XxxContentType } from "../xxx-common/xxx-content/xxx-content-types";
-import { XxxContent } from '../xxx-common/xxx-content/xxx-content';
-import { XxxContentFacade } from "../xxx-common/xxx-content/xxx-content-facade";
-import { XxxSanitizePipe } from '../xxx-common/xxx-sanitize/xxx-sanitize-pipe';
+import { XxxContentType } from "../../core/xxx-content/xxx-content-types";
+import { XxxContent } from '../../core/xxx-content/xxx-content';
+import { XxxContentFacade } from "../../core/xxx-content/xxx-content-facade";
+import { XxxSanitizePipe } from '../../core/xxx-sanitize/xxx-sanitize-pipe';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/cor
 import { debounceTime, distinctUntilChanged } from "rxjs";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { XxxContentType } from "../../xxx-common/xxx-content/xxx-content-types";
-import { XxxContent } from '../../xxx-common/xxx-content/xxx-content';
-import { XxxContentFacade } from "../../xxx-common/xxx-content/xxx-content-facade";
+import { XxxContentType } from "../../../core/xxx-content/xxx-content-types";
+import { XxxContent } from '../../../core/xxx-content/xxx-content';
+import { XxxContentFacade } from "../../../core/xxx-content/xxx-content-facade";
 import { XxxPostType, xxxPostFormDataInitial } from "../xxx-post-types";
 import { XxxPostFacade } from "../xxx-post-facade";
 

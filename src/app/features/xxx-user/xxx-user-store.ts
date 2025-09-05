@@ -2,9 +2,9 @@ import { catchError, of } from "rxjs";
 import { computed, inject, Injectable, Signal, signal, WritableSignal } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { XxxAlert } from "../xxx-common/xxx-alert/xxx-alert";
-import { XxxHttpUtilities } from "../xxx-common/xxx-utilities/xxx-http-utilities";
-import { XxxLoadingService } from "../xxx-common/xxx-loading/xxx-loading-service";
+import { XxxAlert } from "../../core/xxx-alert/xxx-alert";
+import { XxxHttpUtilities } from "../../core/xxx-utilities/xxx-http-utilities";
+import { XxxLoadingService } from "../../core/xxx-loading/xxx-loading-service";
 import { XxxUserType, XxxUserApiResponse, xxxUserInitialState, XxxUserState } from "./xxx-user-types";
 import { XxxUserData } from "./xxx-user-data"
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
-import { XxxContentType } from "../xxx-common/xxx-content/xxx-content-types";
-import { XxxContent } from '../xxx-common/xxx-content/xxx-content';
-import { XxxContentFacade } from "../xxx-common/xxx-content/xxx-content-facade";
+import { XxxContentType } from "../../core/xxx-content/xxx-content-types";
+import { XxxContent } from '../../core/xxx-content/xxx-content';
+import { XxxContentFacade } from "../../core/xxx-content/xxx-content-facade";
 import { XxxPostType } from "./xxx-post-types";
 import { XxxPostFacade } from "./xxx-post-facade";
 
