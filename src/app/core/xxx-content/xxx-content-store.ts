@@ -7,7 +7,7 @@ import {
   XxxContentStatus
 } from "./xxx-content-types";
 import { catchError, of } from "rxjs";
-import { XxxContentService } from "./xxx-content-service";
+import { XxxContentData } from "./xxx-content-data";
 import { HttpErrorResponse } from "@angular/common/http";
 import { XxxHttpUtilities } from "../xxx-utilities/xxx-http-utilities";
 
@@ -20,7 +20,7 @@ import { XxxHttpUtilities } from "../xxx-utilities/xxx-http-utilities";
   providedIn: 'root'
 })
 export class XxxContentStore {
-  private contentService: XxxContentService = inject(XxxContentService);
+  private contentService: XxxContentData = inject(XxxContentData);
 
   // State
   // Where we store all the properties needed to support the view

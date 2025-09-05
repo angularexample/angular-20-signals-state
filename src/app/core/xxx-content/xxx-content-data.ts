@@ -6,7 +6,7 @@ import { XxxContentApi } from "./xxx-content-types";
 @Injectable({
   providedIn: 'root'
 })
-export class XxxContentService {
+export class XxxContentData {
   private http: HttpClient = inject(HttpClient);
 
   /**
